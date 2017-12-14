@@ -4,7 +4,7 @@ Pathfinding using A* in Python
 ![a_star screenshot](https://github.com/pyth/screenshots/blob/master/a_star.png)
 
 ## How to run
-You can run this script with Python 2 or 3. You need to have the Tkinter module installed.
+You can run this script with Python 2 or 3. You need to have the *enum* and *tkinter* modules installed.
 
 To start, press the space bar on your keyboard.
 

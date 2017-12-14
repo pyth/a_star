@@ -55,9 +55,9 @@ class Node:
     def set_tint(self, color):
         try:
             rgb = self.canvas.winfo_rgb(color)
-            r = max(int(rgb[0] / 256.0 - self.difficulty * 25.5), 15)
-            g = max(int(rgb[1] / 256.0 - self.difficulty * 25.5), 15)
-            b = max(int(rgb[2] / 256.0 - self.difficulty * 25.5), 15)
+            r = max(int(rgb[0] / 256.0 - self.difficulty * (rgb[0] / 256.0 / 10.0)), 25)
+            g = max(int(rgb[1] / 256.0 - self.difficulty * (rgb[1] / 256.0 / 10.0)), 25)
+            b = max(int(rgb[2] / 256.0 - self.difficulty * (rgb[2] / 256.0 / 10.0)), 25)
             col = ("#" + 3 * "%02x") % (r, g, b)
             self.canvas.itemconfig(self.pic, fill = col)
             self.canvas.update()

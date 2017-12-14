@@ -12,3 +12,5 @@ Once you run the script, you will see a field filled with squares.
 * All but two squares are a shade of gray. The darker a square, the harder it is to move through it.
 * The *red* square is the start
 * The *green* square is the goal.
+* All *yellow* squares have at some point been considered as the next step towards the goal.
+* The *cyan* squares are show the best path found.

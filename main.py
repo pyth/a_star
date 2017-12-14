@@ -5,6 +5,11 @@ try:
 except ImportError:
     import Tkinter as tk
 
+try:
+    from tkinter import messagebox as mbox
+except ImportError:
+    import tkMessageBox as mbox
+
 import math
 from enum import Enum
 from time import sleep
@@ -49,8 +54,18 @@ class Node:
 
 
     def __eq__(self, other):
+        if other is None:
+            return False
+        
         return self.x == other.x and self.y == other.y
 
+
+    def __neq__(self, other):
+        if other is None:
+            return False
+        
+        return self.x != other.x or self.y != other.y
+    
 
     def set_tint(self, color):
         try:
@@ -104,8 +119,8 @@ class Field(tk.Tk):
         self.bind("<Button-1>", self.onclick)
         self.protocol("WM_DELETE_WINDOW", self.quit)
 
-        width = self.winfo_screenheight() * 0.9
-        height = self.winfo_screenheight() * 0.9
+        width = self.winfo_screenheight() * 0.91
+        height = self.winfo_screenheight() * 0.91
         self.canvas = tk.Canvas(self, bg = "white", width = width, height = height)
         self.canvas.pack()
 
@@ -128,7 +143,8 @@ class Field(tk.Tk):
 
         self.goal = self.nodes[goal[0]][goal[1]]
         self.goal.set_color("green")
-        self.start.f_cost = 0
+        self.goal.difficulty = 0
+        self.goal.f_cost = 0
         self.goal.type = NodeType.GOAL
 
         #self.loop()
@@ -191,6 +207,10 @@ class Field(tk.Tk):
             self.open_set.remove(node)
 
         node = self.goal
+        if node.parent == None:
+            mbox.showerror("No path found", "Could not find a path from start to goal.")
+            return
+        
         while node.parent.type != NodeType.START:
             node = node.parent
             node.set_tint("cyan")

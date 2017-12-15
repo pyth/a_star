@@ -208,7 +208,10 @@ class Field(tk.Tk):
 
         node = self.goal
         if node.parent == None:
-            mbox.showerror("No path found", "Could not find a path from start to goal.")
+            try:
+                mbox.showerror("No path found", "Could not find a path from start to goal.")
+            except:
+                pass
             return
         
         while node.parent.type != NodeType.START:

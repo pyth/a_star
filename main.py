@@ -103,6 +103,8 @@ class Node:
 class Field(tk.Tk):
     def __init__(self, num_nodes):
         tk.Tk.__init__(self)
+        
+        self.running = True
 
         """all nodes"""
         self.nodes = []
@@ -138,7 +140,7 @@ class Field(tk.Tk):
         self.open_set.append(self.start)
 
         goal = (randint(0, self.num_nodes - 1), randint(0, self.num_nodes - 1))
-        while self.start.x == goal[0] and self.start.y == goal[1] or ((self.start.x - goal[0]) ** 2 + (self.start.y - goal[1]) ** 2) ** 0.5 < 0.6 * num_nodes:
+        while ((self.start.x - goal[0]) ** 2 + (self.start.y - goal[1]) ** 2) ** 0.5 < 0.6 * num_nodes:
             goal = (randint(0, self.num_nodes - 1), randint(0, self.num_nodes - 1))
 
         self.goal = self.nodes[goal[0]][goal[1]]
@@ -163,7 +165,7 @@ class Field(tk.Tk):
     def solve(self, event = None):
         self.unbind("<space>")
         node = None
-        while True:
+        while self.running == True:
             if len(self.open_set) == 0:
                 break
 
@@ -207,17 +209,18 @@ class Field(tk.Tk):
             self.open_set.remove(node)
 
         node = self.goal
-        if node.parent == None:
+        if node.parent == None and self.running:
             try:
                 mbox.showerror("No path found", "Could not find a path from start to goal.")
             except:
                 pass
             return
         
-        while node.parent.type != NodeType.START:
-            node = node.parent
-            node.set_tint("cyan")
-            sleep(0.01)
+        if self.running:
+            while (node.parent.type != NodeType.START):
+                node = node.parent
+                node.set_tint("cyan")
+                sleep(0.01)
 
 
     def loop(self):
@@ -227,6 +230,7 @@ class Field(tk.Tk):
     def quit(self, event = None):
         #self.after_cancel(self._loop)
         self.destroy()
+        self.running = False
 
 
 

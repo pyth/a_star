@@ -15,4 +15,4 @@ Once you run the script, you will see a field filled with squares of different c
 * The *red* square is the start
 * The *green* square is the goal.
 * The *yellow* squares have at some point been considered as the next step towards the goal.
-* The *cyan* squares are show the best path found.
+* The *cyan* squares show the best path found.
